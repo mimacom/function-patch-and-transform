@@ -17,9 +17,9 @@ on:
 
 env:
   # Common versions
-  GO_VERSION: '1.25.14'
-  GOLANGCI_VERSION: 'v2.4.0'
-  DOCKER_BUILDX_VERSION: 'v0.36.1'
+  GO_VERSION: '1.26.8'
+  GOLANGCI_VERSION: 'v2.13.2'
+  DOCKER_BUILDX_VERSION: 'v0.37.1'
 
   # These environment variables are important to the Crossplane CLI install.sh
   # script. They determine what version it installs.
@@ -42,7 +42,7 @@ env:
 
 jobs:
   lint:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -62,7 +62,7 @@ jobs:
           version: ${{ env.GOLANGCI_VERSION }}
 
   unit-test:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -80,7 +80,7 @@ jobs:
   # those packages to GitHub as a build artifact. The push job downloads those
   # artifacts and pushes them as a single multi-platform package.
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       fail-fast: true
       matrix:
@@ -150,7 +150,7 @@ jobs:
 
   push:
     if: ${{ github.event_name != 'pull_request' }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions:
       contents: write
       packages: write
